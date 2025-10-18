@@ -3,7 +3,9 @@ const DONE_DIV = document.querySelector("#done_div")
 const DOING_DIV = document.querySelector("#doing_div")
 const TRASH = document.querySelector("#trashed")
 const BODY = document.querySelector("body")
+const DELALL_P = document.querySelector("#deleteAllTimer")
 
+const deleteAllBtn = document.querySelector("#deleteAllBtn")
 const darkmodeBtn = document.querySelector("#darkmodeBtn")
 const newToDoInput = document.querySelector("#new_todoInput")
 const newToDoDate = document.querySelector("#new_todoDate")
@@ -13,6 +15,8 @@ const newToDoSubmit = document.querySelector("#new_todoButton")
 // Array that contains all the cards
 const allcards = []
 
+let deleteAllHeldTimer;
+let deleteAllHeldTimerShown;
 let validateTimer;
 let deleteHeldTimer;
 
@@ -48,6 +52,34 @@ newToDoSubmit.addEventListener("click", (e) => {
     newToDoInput.value = ""
 })
 
+deleteAllBtn.addEventListener("mousedown", () => delAllBtnFunc());
+
+function delAllBtnFunc() {
+    clearInterval(deleteAllHeldTimerShown)
+    clearTimeout(deleteAllHeldTimer)
+    let timer = 50
+    DELALL_P.innerText = "Törlés megkezdése."
+    deleteAllHeldTimer = setTimeout((e) => {
+        allcards.splice(0, allcards.length)
+        renderColumns(allcards)
+    }, 5000)
+    deleteAllHeldTimerShown = setInterval(() => {
+        DELALL_P.innerText = timer
+        timer--
+        if (timer === 0) {
+            cancelDelete()
+        }
+    }, 100)
+
+    function cancelDelete() {
+        clearTimeout(deleteAllHeldTimer)
+        clearInterval(deleteAllHeldTimerShown)
+        DELALL_P.innerText = ""
+    }
+
+    document.addEventListener("mouseup", cancelDelete)
+}
+
 /**
  * Generates a card based on given object. Object must contain keys date, text and color.
  * @param {object} data 
@@ -60,15 +92,18 @@ function generateCard(data) {
     card.classList.add("card")
     const cardBody = document.createElement("div")
     const cardText = document.createElement("h3")
+    const cardFooter = document.createElement("div")
     const cardDueDate = "Határidő: " + data.date;
     const cardColor = data.color
     card.style.backgroundColor = cardColor
     cardText.innerHTML = data.text
+    cardFooter.classList.add("card-footer")
+    cardFooter.innerHTML = "Azonnali törlés: DEL"
     cardBody.classList.add("card-body")
     cardText.classList.add("card-text")
     cardBody.append(cardText)
     cardBody.append(cardDueDate)
-    card.appendChild(cardBody)
+    card.append(cardBody, cardFooter)
 
     const buttons = generateButtons(div)
     const buttonsDiv = document.createElement("div")
@@ -111,7 +146,7 @@ function cardGetFocus(card) {
 function cardDetectDelBtn(card) {
     card.addEventListener("keydown", (e) => {
         if (e.code === "Delete") {
-            putCardIntoTrash(card)
+            card.setAttribute("hidden", "hidden")
         }
     })
 }
@@ -378,20 +413,25 @@ function toggleDarkMode(btn) {
     console.log(btn)
     toggleDarkModeBtnLooks(btn)
     // to light
-    if (btn.innerText === "Light Mode") {
-        BODY.classList.replace("darkmode", "lightmode")
+    if (btn.classList.contains("dark")) {
+        BODY.classList.replace("lightmode", "darkmode")
     } else {
         //to dark
-        BODY.classList.replace("lightmode", "darkmode")
+        BODY.classList.replace("darkmode", "lightmode")
     }
 }
 
+/**
+ * Checks if the given HTML element contains the class value "light".
+ * If it does, classes btn-light and light get swapped to btn-dark and dark.
+ * @param {HTMLElement} btn 
+ */
 function toggleDarkModeBtnLooks(btn) {
-    if (btn.innerText === "Light Mode") {
-        btn.innerText = "Dark Mode"
+    if (btn.classList.contains("light")) {
         btn.classList.replace("btn-light", "btn-dark")
+        btn.classList.replace("light", "dark")
     } else {
-        btn.innerText = "Light Mode"
         btn.classList.replace("btn-dark", "btn-light")
+        btn.classList.replace("dark", "light")
     }
 }
