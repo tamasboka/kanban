@@ -54,6 +54,9 @@ newToDoSubmit.addEventListener("click", (e) => {
 
 deleteAllBtn.addEventListener("mousedown", () => delAllBtnFunc());
 
+/**
+ * Delete all button's function.
+ */
 function delAllBtnFunc() {
     clearInterval(deleteAllHeldTimerShown)
     clearTimeout(deleteAllHeldTimer)
@@ -113,6 +116,7 @@ function generateCard(data) {
     div.append(card, buttonsDiv)
 
     div.setAttribute("tabindex", "0")
+    div.dataset.status = "todo"
     div.addEventListener("click", () => handleButtonDelClick(div))
 
     allcards.push(div)
@@ -171,11 +175,12 @@ function generateButtons(card) {
     deleteBtn.innerText = "Törlés"
     deleteBtn.addEventListener("mousedown", () => delBtnFunc(deleteBtn, card));
 
-    const moveBtn = document.createElement("button")
+    /*const moveBtn = document.createElement("button")
     moveBtn.classList.add("btn", "btn-primary")
     moveBtn.id = "moveBtn"
     moveBtn.innerText = "Áthelyezés"
-    moveBtn.addEventListener("click", () => moveBtnFunc(card))
+    moveBtn.addEventListener("click", () => moveBtnFunc(card))*/
+    const moveBtn = generateMoveBtn(card)
 
     const starBtn = document.createElement("button")
     starBtn.classList.add("btn", "btn-warning")
@@ -216,12 +221,48 @@ function delBtnFunc(deleteBtn, card) {
     document.addEventListener("mouseup", cancelDelete)
 }
 
+function generateMoveBtn(card) {
+    const div = document.createElement("div")
+    div.classList.add("dropdown")
+    const a = document.createElement("a")
+    a.classList.add("btn", "btn-primary", "dropdown-toggle")
+    a.dataset.bsToggle = "dropdown"
+    a.innerText = "Áthelyezés"
+    const ul = document.createElement("ul")
+    ul.classList.add("dropdown-menu")
+    for (const status of ["todo", "doing", "done"]) {
+        const li = document.createElement("li")
+        const button = document.createElement("button")
+        button.classList.add("dropdown-item")
+        if (status === "todo") {
+            button.innerText = "Teendő"
+            button.addEventListener("click", () => {
+                putCardIntoActive(card)
+            })
+        } else if (status === "doing") {
+            button.innerText = "Folyamatban"
+            button.addEventListener("click", () => {
+                putCardIntoDoing(card)
+            })
+        } else {
+            button.innerText = "Kész"
+            button.addEventListener("click", () => {
+                putCardIntoDone(card)
+            })
+        }
+        li.append(button)
+        ul.append(li)
+    }
+    div.append(a, ul)
+    return div
+}
+
 /**
  * The function of the move button. Toggles a card's done state.
  * @param {HTMLElement} card 
  */
 function moveBtnFunc(card) {
-    toggleMarkAsDone(card)
+    
 }
 
 /**
@@ -229,7 +270,7 @@ function moveBtnFunc(card) {
  * @param {HTMLElement} card Card that the border will be handled on
  */
 function toggleFavourite(card) {
-    if (card.classList.contains("border")) {
+    if (card.classList.contains("border-warning")) {
         card.classList.remove("border", "border-warning", "border-5", "rounded")
     } else {
         card.classList.add("border", "border-warning", "border-5", "rounded")
@@ -242,10 +283,16 @@ function toggleFavourite(card) {
  */
 function putCardIntoTrash(card) {
     hideButtons(card)
-    card.classList.add("trashed")
+    card.dataset.status = "trashed"
     card.classList.remove("border", "rounded", "border-5", "border-warning", "border-success")
     card.classList.add("border-danger", "rounded", "border-5", "border")
     handleTrashing(card)
+    renderColumns(allcards)
+}
+
+function putCardIntoDoing(card) {
+    card.dataset.status = "doing"
+    card.classList.remove("border", "rounded", "border-5", "border-warning", "border-danger")
     renderColumns(allcards)
 }
 
@@ -254,7 +301,7 @@ function putCardIntoTrash(card) {
  * @param {HTMLElement} card 
  */
 function putCardIntoActive(card) {
-    card.classList.remove("trashed")
+    card.dataset.status = "todo"
     card.classList.remove("border", "rounded", "border-5", "border-warning", "border-danger")
     resetButtons(card)
     renderColumns(allcards)
@@ -374,12 +421,14 @@ function renderColumns(allcards) {
     TRASH.innerHTML = "<div class='titlebar'><h1>Kuka</h1></div>"
     for (const card of allcards) {
     console.log(card)
-        if (card.classList.contains("trashed")) {
+        if (card.dataset.status === "trashed") {
             TRASH.append(card)
-        } else if (card.classList.contains("done")){
+        } else if (card.dataset.status === "done"){
             DONE_DIV.append(card)
-        } else {
+        } else if (card.dataset.status === "todo"){
             TODO_DIV.append(card)
+        } else if (card.dataset.status === "doing") {
+            DOING_DIV.append(card)
         }
     }
 }
@@ -388,26 +437,16 @@ function renderColumns(allcards) {
  * Toggles a card's as done status. When marked as done, adds the done class to the card and changes the border to green. If the card is already done, the done class gets removed.
  * @param {HTMLElement} card 
  */
-function toggleMarkAsDone(card) {
-    if (card.classList.contains("border-warning")) {
-        card.classList.remove("border", "border-warning", "border-5", "rounded")
-    }
-    if (card.classList.contains("trashed")) {
-        card.classList.remove("trashed")
-    }
-    if (card.classList.contains("done")) {
-        card.classList.remove("done")
-        card.classList.remove("border", "border-success", "border-5", "rounded")
-    } else {
-        card.classList.add("done")
-        card.classList.add("border", "border-success", "border-5", "rounded")
-    }
+function putCardIntoDone(card) {
+    card.dataset.status = "done"
+    card.classList.remove("border", "border-success", "border-warning", "border-5", "rounded")
+    card.classList.add("border", "border-success")
     renderColumns(allcards)
 }
 
-//a sajat funkcio
+//a sajat funkcio 2
 /**
- * Function that toggles dark mode. Theme will be dark if current theme is light and vice versa.
+ * Function that toggles theme.
  */
 function toggleDarkMode(btn) {
     console.log(btn)
