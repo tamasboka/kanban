@@ -19,6 +19,14 @@
     background-color: #131516;
     color: #efefef;
 }
+.darkmode ul{
+    background-color: #131516;
+    color: #efefef;
+}
+.darkmode .dropdown-item{
+    background-color: #131516;
+    color: #efefef;
+}
 .lightmode {
     background-color: #efefef;
     color: #212529;
@@ -28,6 +36,14 @@
     color: #212529;
 }
 .lightmode .modal-content {
+    background-color: lightgray;
+    color: #212529;
+}
+.lightmode ul {
+    background-color: lightgray;
+    color: #212529;
+}
+.lightmode .dropdown-item {
     background-color: lightgray;
     color: #212529;
 }
