@@ -11,6 +11,9 @@ const newToDoInput = document.querySelector("#new_todoInput")
 const newToDoDate = document.querySelector("#new_todoDate")
 const newToDoColor = document.querySelector("#new_todoColor")
 const newToDoSubmit = document.querySelector("#new_todoButton")
+const moveAllIntoTodo = document.querySelector("#putAllIntoTodoBtn")
+const moveAllIntoDoing = document.querySelector("#putAllIntoDoingBtn")
+const moveAllIntoDone = document.querySelector("#putAllIntoDoneBtn")
 
 // Array that contains all the cards
 const allcards = []
@@ -21,6 +24,18 @@ let validateTimer;
 let deleteHeldTimer;
 
 document.addEventListener("DOMContentLoaded", () => renderColumns(allcards))
+
+moveAllIntoDone.addEventListener("click", () => {
+    putAllIntoDone()
+})
+
+moveAllIntoDoing.addEventListener("click", (e) => {
+    putAllIntoDoing()
+})
+
+moveAllIntoTodo.addEventListener("click", (e) => {
+    putAllIntoTodo()
+})
 
 darkmodeBtn.addEventListener("click", (e) => {
     toggleDarkMode(darkmodeBtn)
@@ -81,6 +96,27 @@ function delAllBtnFunc() {
     }
 
     document.addEventListener("mouseup", cancelDelete)
+}
+
+/**
+ * Runs the putCardIntoTodo with all cards
+ */
+function putAllIntoTodo() {
+    for (const card of allcards) {
+        putCardIntoTodo(card)
+    }
+}
+
+function putAllIntoDoing() {
+    for (const card of allcards) {
+        putCardIntoDoing(card)
+    }
+}
+
+function putAllIntoDone() {
+    for (const card of allcards) {
+        putCardIntoDone(card)
+    }
 }
 
 /**
@@ -237,7 +273,7 @@ function generateMoveBtn(card) {
         if (status === "todo") {
             button.innerText = "Teendő"
             button.addEventListener("click", () => {
-                putCardIntoActive(card)
+                putCardIntoTodo(card)
             })
         } else if (status === "doing") {
             button.innerText = "Folyamatban"
@@ -300,7 +336,7 @@ function putCardIntoDoing(card) {
  * Removes "trashed" class from card and runs renderColumns() function with all cards.
  * @param {HTMLElement} card 
  */
-function putCardIntoActive(card) {
+function putCardIntoTodo(card) {
     card.dataset.status = "todo"
     card.classList.remove("border", "rounded", "border-5", "border-warning", "border-danger")
     resetButtons(card)
@@ -346,7 +382,7 @@ function createCancelDeletionButton(card, progress) {
     cancelDeletion.id = "cancelBtn"
     cancelDeletion.addEventListener("click", (e) => {
         clearInterval(progress)
-        putCardIntoActive(card)
+        putCardIntoTodo(card)
         hideProgressBar(card)
         hideResetButton(card)
     })
@@ -439,8 +475,8 @@ function renderColumns(allcards) {
  */
 function putCardIntoDone(card) {
     card.dataset.status = "done"
-    card.classList.remove("border", "border-success", "border-warning", "border-5", "rounded")
-    card.classList.add("border", "border-success")
+    //card.classList.remove("border", "border-success", "border-warning", "border-5", "rounded")
+    //card.classList.add("border", "border-success")
     renderColumns(allcards)
 }
 
