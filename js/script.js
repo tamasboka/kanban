@@ -2,7 +2,9 @@ const TODO_DIV = document.querySelector("#cards_div")
 const DONE_DIV = document.querySelector("#done_div")
 const DOING_DIV = document.querySelector("#doing_div")
 const TRASH = document.querySelector("#trashed")
+const BODY = document.querySelector("body")
 
+const darkmodeBtn = document.querySelector("#darkmodeBtn")
 const newToDoInput = document.querySelector("#new_todoInput")
 const newToDoDate = document.querySelector("#new_todoDate")
 const newToDoColor = document.querySelector("#new_todoColor")
@@ -15,6 +17,10 @@ let validateTimer;
 let deleteHeldTimer;
 
 document.addEventListener("DOMContentLoaded", () => renderColumns(allcards))
+
+darkmodeBtn.addEventListener("click", (e) => {
+    toggleDarkMode(darkmodeBtn)
+})
 
 newToDoInput.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
@@ -368,6 +374,24 @@ function toggleMarkAsDone(card) {
 /**
  * Function that toggles dark mode. Theme will be dark if current theme is light and vice versa.
  */
-function toggleDarkMode() {
-    
+function toggleDarkMode(btn) {
+    console.log(btn)
+    toggleDarkModeBtnLooks(btn)
+    // to light
+    if (btn.innerText === "Light Mode") {
+        BODY.classList.replace("darkmode", "lightmode")
+    } else {
+        //to dark
+        BODY.classList.replace("lightmode", "darkmode")
+    }
+}
+
+function toggleDarkModeBtnLooks(btn) {
+    if (btn.innerText === "Light Mode") {
+        btn.innerText = "Dark Mode"
+        btn.classList.replace("btn-light", "btn-dark")
+    } else {
+        btn.innerText = "Light Mode"
+        btn.classList.replace("btn-dark", "btn-light")
+    }
 }
