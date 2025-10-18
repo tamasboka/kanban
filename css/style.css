@@ -1,0 +1,26 @@
+form {
+    margin-top: 50%;
+    input {
+        width: 150px;
+    }
+    button {
+        margin-top: 15px;
+    }
+}
+h1 {
+    text-align: center;
+}
+#card-div {
+    margin-bottom: 10px;
+}
+.titlebar {
+    color: black;
+    background-image: var(--bs-gradient);
+    background-color: lightgray;
+}
+#buttons_div {
+    text-align: center;
+    button {
+        display:inline-block;
+    }
+}
