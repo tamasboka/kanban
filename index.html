@@ -18,9 +18,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
-        <form class="d-flex">
-            <button class="btn btn-light btn-outline-secondary" id="darkmodeBtn">Light Mode</button>
-        </form>
+        <div class="d-flex">
+            <button class="btn btn-light btn-outline-secondary light" id="darkmodeBtn">Theme</button>
+        </div>
         </div>
     </div>
     </nav>
@@ -31,38 +31,65 @@
         <div class="container">
     -->
         <div class="row">
-            <div class="col-4">
+            <div class="col-4 text-center">
                 <div class="titlebar">
-                    <h1>Új Kártya</h1>
+                    <h1>Actions</h1>
                 </div>
-                <form>
-                    <label class="form-label" for="new_todoInput">To Do</label>
-                    <input type="text" class="form-control" id="new_todoInput" required></input>
-                    <label class="form-label" for="new_todoDate">Határidő</label>
-                    <input type="date" class="form-control" id="new_todoDate">
-                    <label class="form-label" for="new_todoColor">Háttérszín</label>
-                    <input type="color" class="form-control" value="#ffffff" id="new_todoColor">
-                    <button type="submit" class="btn btn-primary" id="new_todoButton">Submit</button>
-                </form>
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formOpen">
+                        Új kártya
+                    </button>
+    
+                    <div class="modal fade" id="formOpen" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Új kártya</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form>
+                        <div class="modal-body">
+                                <label class="form-label" for="new_todoInput">To Do</label>
+                                <input type="text" class="form-control" id="new_todoInput" required></input>
+                                <label class="form-label" for="new_todoDate">Határidő</label>
+                                <input type="date" class="form-control" id="new_todoDate">
+                                <label class="form-label" for="new_todoColor">Háttérszín</label>
+                                <input type="color" class="form-control" value="#ffffff" id="new_todoColor">
+                        </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="new_todoButton" data-bs-dismiss="modal">Submit</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div id="deleteAllDiv">
+                    <button type="button" class="btn btn-danger" id="deleteAllBtn">
+                        Összes kártya törlése
+                    </button>
+                    <p id="deleteAllTimer"></p>
+                </div>
             </div>
             <div class="col-8">
                 <!-- JS GENERATES IT -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-4" id="cards_div">
+                        <div class="col-3" id="cards_div">
                             <!-- JS GENERATES IT-->
                         </div>
-                        <div class="col-4" id="doing_div">
+                        <div class="col-3" id="doing_div">
                             <!-- JS GENERATES IT -->
                         </div>
-                        <div class="col-4" id="done_div">
+                        <div class="col-3" id="done_div">
+                            <!-- JS GENERATES IT -->
+                        </div>
+                        <div class="col-3" id="trashed">
                             <!-- JS GENERATES IT -->
                         </div>
                     </div>
                 </div>
-                <div id="trashed">
-                    <!-- JS GENERATES IT -->
-                </div>
+                
             </div>
         </div>
     </div>
