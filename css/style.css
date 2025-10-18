@@ -11,8 +11,16 @@
     background-color: #212529;
     color: #efefef;
 }
+.darkmode .titlebar{
+    background-color: #131516;
+    color: #efefef;
+}
 .lightmode {
     background-color: #efefef;
+    color: #212529;
+}
+.lightmode .titlebar {
+    background-color: lightgray;
     color: #212529;
 }
 h1 {
@@ -23,7 +31,7 @@ h1 {
 }
 .titlebar {
     color: black;
-    background-image: var(--bs-gradient);
+    /* background-image: var(--bs-gradient); */
     background-color: lightgray;
 }
 #buttons_div {
