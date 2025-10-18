@@ -10,12 +10,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban Lite</title>
 </head>
-<body>
+<body class="lightmode">
 <div class="container-fluid">
-    <div class="titlebar">
-        <h1>Kanban Lite</h1>
+    <nav class="navbar navbar-expand-lg bg-primary mb-2">
+    <div class="container-fluid">
+        <a class="navbar-brand">Kanban</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <form class="d-flex">
+            <button class="btn btn-light btn-outline-secondary" id="darkmodeBtn">Light Mode</button>
+        </form>
+        </div>
     </div>
-    <div class="container">
+    </nav>
+    <!--
+        <div class="titlebar">
+            <h1>Kanban Lite</h1>
+        </div>
+        <div class="container">
+    -->
         <div class="row">
             <div class="col-4">
                 <div class="titlebar">
@@ -23,11 +37,11 @@
                 </div>
                 <form>
                     <label class="form-label" for="new_todoInput">To Do</label>
-                    <textarea type="text" class="form-control" id="new_todoInput" required></textarea>
+                    <input type="text" class="form-control" id="new_todoInput" required></input>
                     <label class="form-label" for="new_todoDate">Határidő</label>
                     <input type="date" class="form-control" id="new_todoDate">
                     <label class="form-label" for="new_todoColor">Háttérszín</label>
-                    <input type="color" class="form-control" id="new_todoColor">
+                    <input type="color" class="form-control" value="#ffffff" id="new_todoColor">
                     <button type="submit" class="btn btn-primary" id="new_todoButton">Submit</button>
                 </form>
             </div>
