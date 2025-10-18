@@ -1,4 +1,4 @@
-form {
+/*form {
     margin-top: 50%;
     input {
         width: 150px;
@@ -6,6 +6,14 @@ form {
     button {
         margin-top: 15px;
     }
+}*/
+.darkmode {
+    background-color: #212529;
+    color: #efefef;
+}
+.lightmode {
+    background-color: #efefef;
+    color: #212529;
 }
 h1 {
     text-align: center;
@@ -20,9 +28,10 @@ h1 {
 }
 #buttons_div {
     text-align: center;
-    button {
-        display:inline-block;
-    }
+}
+
+.card {
+    background-image: var(--bs-gradient);
 }
 * {
     font-family: 'Ubuntu';
