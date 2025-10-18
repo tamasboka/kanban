@@ -15,11 +15,19 @@
     background-color: #131516;
     color: #efefef;
 }
+.darkmode .modal-content{
+    background-color: #131516;
+    color: #efefef;
+}
 .lightmode {
     background-color: #efefef;
     color: #212529;
 }
 .lightmode .titlebar {
+    background-color: lightgray;
+    color: #212529;
+}
+.lightmode .modal-content {
     background-color: lightgray;
     color: #212529;
 }
