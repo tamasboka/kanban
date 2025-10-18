@@ -19,7 +19,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
         <div class="d-flex">
-            <button class="btn btn-light btn-outline-secondary light" id="darkmodeBtn">Theme</button>
+            <button class="btn btn-light btn-outline-secondary light" id="darkmodeBtn">Téma</button>
         </div>
         </div>
     </div>
@@ -41,29 +41,31 @@
                     </button>
     
                     <div class="modal fade" id="formOpen" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Új kártya</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form>
-                        <div class="modal-body">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Új kártya</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form>
+                            <div class="modal-body">
                                 <label class="form-label" for="new_todoInput">To Do</label>
                                 <input type="text" class="form-control" id="new_todoInput" required></input>
+                                <!-- sajat funkcio 1 -->
                                 <label class="form-label" for="new_todoDate">Határidő</label>
                                 <input type="date" class="form-control" id="new_todoDate">
                                 <label class="form-label" for="new_todoColor">Háttérszín</label>
                                 <input type="color" class="form-control" value="#ffffff" id="new_todoColor">
+                            </div>
+                            </form>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="new_todoButton" data-bs-dismiss="modal">Submit</button>
+                            </div>
+                            </div>
                         </div>
-                        </form>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="new_todoButton" data-bs-dismiss="modal">Submit</button>
-                        </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
+                <!-- sajat funkcio 3 -->
                 <div id="deleteAllDiv">
                     <button type="button" class="btn btn-danger" id="deleteAllBtn">
                         Összes kártya törlése
@@ -89,7 +91,6 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
