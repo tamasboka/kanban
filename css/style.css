@@ -11,39 +11,18 @@
     background-color: #212529;
     color: #efefef;
 }
-.darkmode .titlebar{
+.darkmode .titlebar, .darkmode .modal-content, .darkmode ul, .darkmode .dropdown-item {
     background-color: #131516;
     color: #efefef;
 }
-.darkmode .modal-content{
-    background-color: #131516;
-    color: #efefef;
-}
-.darkmode ul{
-    background-color: #131516;
-    color: #efefef;
-}
-.darkmode .dropdown-item{
-    background-color: #131516;
+.darkmode .navbar-brand {
     color: #efefef;
 }
 .lightmode {
     background-color: #efefef;
     color: #212529;
 }
-.lightmode .titlebar {
-    background-color: lightgray;
-    color: #212529;
-}
-.lightmode .modal-content {
-    background-color: lightgray;
-    color: #212529;
-}
-.lightmode ul {
-    background-color: lightgray;
-    color: #212529;
-}
-.lightmode .dropdown-item {
+.lightmode .titlebar, .lightmode .dropdown-item, .lightmode .modal-content, .lightmode ul {
     background-color: lightgray;
     color: #212529;
 }
@@ -60,6 +39,7 @@ h1 {
 }
 #buttons_div {
     text-align: center;
+    display: flex;
 }
 
 .card {
