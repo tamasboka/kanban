@@ -22,6 +22,7 @@ let deleteAllHeldTimer;
 let deleteAllHeldTimerShown;
 let validateTimer;
 let deleteHeldTimer;
+let dirtyInterval;
 
 document.addEventListener("DOMContentLoaded", () => renderColumns(allcards))
 
@@ -42,7 +43,7 @@ darkmodeBtn.addEventListener("click", (e) => {
 })
 
 newToDoInput.addEventListener("keydown", (e) => {
-    if (e.code === "Enter") {
+    if (e.key === "Enter") {
         const data = getNewCardData()
         generateCard(data)
         newToDoInput.value = ""
@@ -157,6 +158,7 @@ function generateCard(data) {
     div.addEventListener("click", () => handleButtonDelClick(div))
 
     allcards.push(div)
+    startAutosave()
     renderColumns(allcards)
 }
 
@@ -186,7 +188,7 @@ function cardGetFocus(card) {
  */
 function cardDetectDelBtn(card) {
     card.addEventListener("keydown", (e) => {
-        if (e.code === "Delete") {
+        if (e.key === "Delete") {
             card.setAttribute("hidden", "hidden")
         }
     })
@@ -327,32 +329,36 @@ function toggleFavourite(card) {
 }
 
 /**
- * Adds "trashed" class from card and runs renderColumns() function with all cards.
+ * Adds "trashed" data-status value to card, removes "favourited" and adds a red one.
+ * Runs renderColumns() with all cards
  * @param {HTMLElement} card 
  */
 function putCardIntoTrash(card) {
     hideButtons(card)
-    card.dataset.status = "trashed"
+    card.dataset.isTrashed = "true"
     card.classList.remove("border", "rounded", "border-5", "border-warning", "border-success")
     card.classList.add("border-danger", "rounded", "border-5", "border")
     handleTrashing(card)
+    startAutosave()
     renderColumns(allcards)
 }
 
 function putCardIntoDoing(card) {
     card.dataset.status = "doing"
     card.classList.remove("border", "rounded", "border-5", "border-warning", "border-danger")
+    startAutosave()
     renderColumns(allcards)
 }
 
 /**
- * Removes "trashed" class from card and runs renderColumns() function with all cards.
+ * Removes "trashed" data-status from card and runs renderColumns() function with all cards.
  * @param {HTMLElement} card 
  */
 function putCardIntoTodo(card) {
-    card.dataset.status = "todo"
+    card.dataset.isTrashed = "false"
     card.classList.remove("border", "rounded", "border-5", "border-warning", "border-danger")
     resetButtons(card)
+    startAutosave()
     renderColumns(allcards)
 }
 
@@ -431,7 +437,7 @@ function resetButtons(card) {
  * @param {HTMLElement} card 
  */
 function hideButtons(card) {
-    console.log(card)
+    //console.log(card)
     card.querySelector("#buttons_div").setAttribute("hidden", "hidden")
 }
 
@@ -469,15 +475,17 @@ function renderColumns(allcards) {
     DONE_DIV.innerHTML = "<div class='titlebar'><h1>Kész</h1></div>"
     TRASH.innerHTML = "<div class='titlebar'><h1>Kuka</h1></div>"
     for (const card of allcards) {
-    console.log(card)
-        if (card.dataset.status === "trashed") {
+        //console.log(card)
+        if (card.dataset.isTrashed === "true") {
             TRASH.append(card)
-        } else if (card.dataset.status === "done"){
-            DONE_DIV.append(card)
-        } else if (card.dataset.status === "todo"){
-            TODO_DIV.append(card)
-        } else if (card.dataset.status === "doing") {
-            DOING_DIV.append(card)
+        } else {
+            if (card.dataset.status === "done") {
+                DONE_DIV.append(card)
+            } else if (card.dataset.status === "todo"){
+                TODO_DIV.append(card)
+            } else if (card.dataset.status === "doing") {
+                DOING_DIV.append(card)
+            }
         }
     }
 }
@@ -490,6 +498,7 @@ function putCardIntoDone(card) {
     card.dataset.status = "done"
     //card.classList.remove("border", "border-success", "border-warning", "border-5", "rounded")
     //card.classList.add("border", "border-success")
+    startAutosave()
     renderColumns(allcards)
 }
 
@@ -498,7 +507,7 @@ function putCardIntoDone(card) {
  * Function that toggles theme.
  */
 function toggleDarkMode(btn) {
-    console.log(btn)
+    //console.log(btn)
     toggleDarkModeBtnLooks(btn)
     // to light
     if (btn.classList.contains("dark")) {
@@ -522,4 +531,15 @@ function toggleDarkModeBtnLooks(btn) {
         btn.classList.replace("btn-dark", "btn-light")
         btn.classList.replace("dark", "light")
     }
+}
+
+function startAutosave() {
+    dirtyInterval = setInterval(() => {
+        console.log("Mentve")
+        stopAutosave()
+    }, 10000)
+}
+
+function stopAutosave() {
+    clearInterval(dirtyInterval)
 }
