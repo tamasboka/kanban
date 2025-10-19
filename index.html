@@ -19,7 +19,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
         <div class="d-flex">
-            <button class="btn btn-light btn-outline-secondary light shadow-lg" id="darkmodeBtn">Téma</button>
+            <button class="btn btn-light btn-outline-secondary light shadow-lg" id="darkmodeBtn" aria-label="Téma váltása">Téma</button>
         </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
                     <h1>Actions</h1>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formOpen">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formOpen" aria-label="Új kártya">
                         Új kártya
                     </button>
     
@@ -59,7 +59,7 @@
                             </div>
                             </form>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" id="new_todoButton" data-bs-dismiss="modal">Submit</button>
+                                <button type="submit" class="btn btn-primary" id="new_todoButton" data-bs-dismiss="modal" aria-label="Új kártya elkészítése">Submit</button>
                             </div>
                             </div>
                         </div>
@@ -67,22 +67,22 @@
                 </div>
                 <!-- sajat funkcio(k) 3 -->
                 <div id="putAllIntoTodoDiv">
-                    <button type="button" class="btn btn-primary" id="putAllIntoTodoBtn">
+                    <button type="button" class="btn btn-primary" id="putAllIntoTodoBtn" aria-label="Összes teendőbe">
                         Összes teendőbe
                     </button>
                 </div>
                 <div id="putAllIntoDoingDiv">
-                    <button type="button" class="btn btn-primary" id="putAllIntoDoingBtn">
+                    <button type="button" class="btn btn-primary" id="putAllIntoDoingBtn" aria-label="Összes folyamatban oszlopba">
                         Összes folyamatban oszlopba
                     </button>
                 </div>
                 <div id="putAllIntoDoneDiv">
-                    <button type="button" class="btn btn-primary" id="putAllIntoDoneBtn">
+                    <button type="button" class="btn btn-primary" id="putAllIntoDoneBtn" aria-label="Összes kész">
                         Összes kész
                     </button>
                 </div>
                 <div id="deleteAllDiv">
-                    <button type="button" class="btn btn-danger" id="deleteAllBtn">
+                    <button type="button" class="btn btn-danger" id="deleteAllBtn" aria-label="Összes kártya törlése">
                         Összes kártya törlése
                     </button>
                     <p id="deleteAllTimer"></p>
