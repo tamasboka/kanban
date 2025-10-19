@@ -147,6 +147,7 @@ function generateCard(data) {
     const buttons = generateButtons(div)
     const buttonsDiv = document.createElement("div")
     buttonsDiv.id = "buttons_div"
+    //buttonsDiv.classList.add("row")
     buttonsDiv.append(buttons.moveBtn, buttons.starBtn, buttons.deleteBtn)
 
     div.append(card, buttonsDiv)
@@ -209,6 +210,7 @@ function generateButtons(card) {
     deleteBtn.classList.add("btn", "btn-danger")
     deleteBtn.id = "deleteBtn"
     deleteBtn.innerText = "Törlés"
+    deleteBtn.ariaLabel = "Kártya törlése"
     deleteBtn.addEventListener("mousedown", () => delBtnFunc(deleteBtn, card));
 
     /*const moveBtn = document.createElement("button")
@@ -217,10 +219,12 @@ function generateButtons(card) {
     moveBtn.innerText = "Áthelyezés"
     moveBtn.addEventListener("click", () => moveBtnFunc(card))*/
     const moveBtn = generateMoveBtn(card)
+    moveBtn.ariaLabel = "Kártya áthelyezése"
 
     const starBtn = document.createElement("button")
     starBtn.classList.add("btn", "btn-warning")
     starBtn.innerText = "Csillag"
+    starBtn.ariaLabel = "Kedvencnek jelölés"
     starBtn.addEventListener("click", () => toggleFavourite(card))
 
     return {
@@ -257,6 +261,11 @@ function delBtnFunc(deleteBtn, card) {
     document.addEventListener("mouseup", cancelDelete)
 }
 
+/**
+ * Generates the move button and its function
+ * @param {HTMLElement} card 
+ * @returns 
+ */
 function generateMoveBtn(card) {
     const div = document.createElement("div")
     div.classList.add("dropdown")
@@ -267,26 +276,7 @@ function generateMoveBtn(card) {
     const ul = document.createElement("ul")
     ul.classList.add("dropdown-menu")
     for (const status of ["todo", "doing", "done"]) {
-        const li = document.createElement("li")
-        const button = document.createElement("button")
-        button.classList.add("dropdown-item")
-        if (status === "todo") {
-            button.innerText = "Teendő"
-            button.addEventListener("click", () => {
-                putCardIntoTodo(card)
-            })
-        } else if (status === "doing") {
-            button.innerText = "Folyamatban"
-            button.addEventListener("click", () => {
-                putCardIntoDoing(card)
-            })
-        } else {
-            button.innerText = "Kész"
-            button.addEventListener("click", () => {
-                putCardIntoDone(card)
-            })
-        }
-        li.append(button)
+        const li = moveBtnFunc(status, card)
         ul.append(li)
     }
     div.append(a, ul)
@@ -294,11 +284,34 @@ function generateMoveBtn(card) {
 }
 
 /**
- * The function of the move button. Toggles a card's done state.
- * @param {HTMLElement} card 
+ * Generates one of the selectable move options.
+ * @param {string} status 
  */
-function moveBtnFunc(card) {
-    
+function moveBtnFunc(status, card) {
+    const li = document.createElement("li")
+    const button = document.createElement("button")
+    button.classList.add("dropdown-item")
+    if (status === "todo") {
+        button.innerText = "Teendő"
+        button.ariaLabel = "Áthelyezés a teendő oszlopba"
+        button.addEventListener("click", () => {
+            putCardIntoTodo(card)
+        })
+    } else if (status === "doing") {
+        button.innerText = "Folyamatban"
+        button.ariaLabel = "Áthelyezés a folyamatban oszlopba"
+        button.addEventListener("click", () => {
+            putCardIntoDoing(card)
+        })
+    } else {
+        button.innerText = "Kész"
+        button.ariaLabel = "Áthelyezés a kész oszlopba"
+        button.addEventListener("click", () => {
+            putCardIntoDone(card)
+        })
+    }
+    li.append(button)
+    return li
 }
 
 /**
